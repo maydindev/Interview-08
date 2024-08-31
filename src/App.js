@@ -72,6 +72,7 @@ const ValidatedForm = () => {
       <input
         value={username}
         type="text"
+        placeholder="Username"
         onChange={/* KODUNUZ BURAYA GELECEK */ (e) => setUsername(e.target.value)}
         onFocus={() => setIsFocusedUsername(true)}
         onBlur={() => setIsFocusedUsername(false)}
@@ -79,7 +80,8 @@ const ValidatedForm = () => {
       />
       <input
         value={password}
-        type="text"
+        type="password"
+        placeholder="Password"
         onChange={/* KODUNUZ BURAYA GELECEK */ (e) => setPassword(e.target.value)}
         onFocus={() => setIsFocusedPassword(true)}
         onBlur={() => setIsFocusedPassword(false)}
