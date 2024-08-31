@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 function App() {
   return (
@@ -20,9 +20,41 @@ const ValidatedForm = () => {
   const [accounts, setAccounts] = useState([
     { username: "NamıkKorona1", password: "1234567" }
   ]);
+  const [isFocusedUsername, setIsFocusedUsername] = useState(false);
+  const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+
+  //username: "NamıkKorona1", password: "1234567" 
+  //username: "yeniHesap", password: "1234567" 
+  //username: "yeni", password: "123"
+  //username: "yeniHesapyeniHesapyeniHesapyeniHesap", password: "1234567123456712345671234567" 
 
   const onSubmit = (e) => {
     // KODUNUZ BURAYA GELECEK
+    e.preventDefault()
+    const isSuccess = accounts.some((account) => {
+      return account.username === username && account.password === password;
+    })
+    console.log(isSuccess)
+    
+    if(isSuccess) {
+      alert(`Login başarılı, selam ${username}.`);
+      setUsername("")
+      setPassword("")
+    } else if(!isSuccess && username.length > 6 && password.length > 6 && username.length <=20 && password.length <=20) {
+      alert(`Yeni hesap oluşturuldu, merhaba ${username}`)
+      const newAccounts = [...accounts,{username,password}]
+      setAccounts(newAccounts)
+      setUsername("")
+      setPassword("")
+    } else if(username.length < 6 && password.length < 6) {
+      alert(`Username ve password, 6 karakterden uzun olmalıdır.`)
+    } else if(username.length > 20) {
+      alert(`Username 20 karakteri geçemez.`)
+    } else {
+      alert(`Kullanıcı adı veya şifre doğru/ kriterlere uygun değil.`)
+      setUsername("")
+      setPassword("")
+    }
   };
 
   return (
@@ -35,20 +67,25 @@ const ValidatedForm = () => {
       }}
       onSubmit={onSubmit}
     >
-      <h3>Login</h3>
+      <h3><strong>Login</strong></h3>
+      <br />
       <input
         value={username}
         type="text"
-        onChange={/* KODUNUZ BURAYA GELECEK */ () => {}}
-        style={{ marginBottom: 5 }}
+        onChange={/* KODUNUZ BURAYA GELECEK */ (e) => setUsername(e.target.value)}
+        onFocus={() => setIsFocusedUsername(true)}
+        onBlur={() => setIsFocusedUsername(false)}
+        style={{ marginBottom: 5, border: isFocusedUsername ? "2px solid black" : "1px solid black", outline: 'none' }}
       />
       <input
         value={password}
         type="text"
-        onChange={/* KODUNUZ BURAYA GELECEK */ () => {}}
-        style={{ marginBottom: 10 }}
+        onChange={/* KODUNUZ BURAYA GELECEK */ (e) => setPassword(e.target.value)}
+        onFocus={() => setIsFocusedPassword(true)}
+        onBlur={() => setIsFocusedPassword(false)}
+        style={{ marginBottom: 10, border: isFocusedPassword ? "2px solid black" : "1px solid black", outline: 'none' }}
       />
-      <button style={{ alignSelf: "center" }} onClick={onSubmit}>
+      <button style={{ alignSelf: "center", border: "1px solid black",backgroundColor:"lightgray", width:"80px"}} type="submit" /*onClick={onSubmit}*/>
         Submit
       </button>
     </form>
