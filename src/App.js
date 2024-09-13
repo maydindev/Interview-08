@@ -40,7 +40,7 @@ const ValidatedForm = () => {
       alert(`Login başarılı, selam ${username}.`);
       setUsername("")
       setPassword("")
-    } else if(!isSuccess && username.length > 6 && password.length > 6 && username.length <=20 && password.length <=20) {
+    } else if(!isSuccess && username.length >= 6 && password.length >= 6 && username.length <=20 && password.length <=20) {
       alert(`Yeni hesap oluşturuldu, merhaba ${username}`)
       const newAccounts = [...accounts,{username,password}]
       setAccounts(newAccounts)
@@ -51,7 +51,7 @@ const ValidatedForm = () => {
     } else if(username.length > 20) {
       alert(`Username 20 karakteri geçemez.`)
     } else {
-      alert(`Kullanıcı adı veya şifre doğru/ kriterlere uygun değil.`)
+      alert(`Kullanıcı adı veya şifre hatalı.`)
       setUsername("")
       setPassword("")
     }
